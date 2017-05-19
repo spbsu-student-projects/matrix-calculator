@@ -119,7 +119,7 @@ class Matrix:
 		elif power == 2: return self * self
 		elif power == 1: return Matrix(self)
 		elif power == 0: return Matrix(1, self.height, self.width)
-		elif power < 0: return self ** -1 * self ** -power
+		elif power < 0: return (self ** -1) ** -power
 		elif power % 2 == 1: return self ** (power - 1) * self
 		else: return (self ** (power // 2)) ** 2
 	
