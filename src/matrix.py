@@ -154,6 +154,8 @@ class Matrix:
 		return item in self.__data;
 	
 	def __str__(self):
-		return '\n'.join(' '.join(map(str, self.__data[i*self.width:(i+1)*self.width])) for i in range(self.height))
+		maxlen = max(map(lambda a: len(str(a)), self))
+		return '\n'.join(' '.join(map(lambda a: '{:>{}}'.format(str(a), maxlen),
+			self.__data[i*self.width:(i+1)*self.width])) for i in range(self.height))
 
 class MatrixException(Exception): pass
