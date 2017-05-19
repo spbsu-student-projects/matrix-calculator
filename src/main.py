@@ -27,19 +27,28 @@ for t in s:
 				print("Input " + t + ":")
 				
 				while True:
-					elemLine = list(map(fractions.Fraction, input().split()))
+					try:
+						elemLine = list(map(fractions.Fraction, input().split()))
+					except ValueError:
+						print("Wrong elements, input this line again:")
+						continue
+					
 					if len(elemLine) == 0: break
 					
-					if len(elemLine) != width and not width is None:
-						print("Wrong number of elements, input this line again:")
-					else:
+					if len(elemLine) == width or width is None:
 						width = len(elemLine)
 						elemList.extend(elemLine)
+					else:
+						print("Wrong number of elements, input this line again:")
 			
 			m = matrix.Matrix(0, len(elemList) // width, width)
 			for i in range(len(m)): m[i] = elemList[i]
 			
 			d[t] = m
 
-print("Result:")
-print(expression.process(s, d))
+try:
+	result = expression.process(s, d)
+	print("Result:")
+	print(result)
+except matrix.MatrixException as e:
+	print("Error:", e)

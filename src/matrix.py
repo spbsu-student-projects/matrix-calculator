@@ -32,7 +32,8 @@ class Matrix:
 		other = Matrix(other, self.height, self.width)
 		self = Matrix(self, other.height, other.width)
 		
-		if self.height != self.height or self.width != other.width: raise MatrixException()
+		if self.height != self.height or self.width != other.width:
+			raise MatrixException("Addition of matrices of different sizes")
 		
 		for i in range(len(self)): self[i] += other[i]
 		
@@ -58,7 +59,8 @@ class Matrix:
 				m[i] *= other[0]
 			return m
 		
-		if self.width != other.height: raise MatrixException()
+		if self.width != other.height:
+			raise MatrixException("Multiplication of matrices of different sizes")
 		
 		m = Matrix(0, self.height, other.width)
 		
@@ -83,14 +85,17 @@ class Matrix:
 	
 	def __pow__(self, power):
 		if isinstance(power, Matrix):
-			if not power.isScalar(): raise MatrixException()
+			if not power.isScalar():
+				raise MatrixException("Raising matrix to power of matrix")
 			power = power[0]
 		
 		power = fractions.Fraction(power)
 		
-		if power.denominator != 1: raise MatrixException()
+		if power.denominator != 1:
+			raise MatrixException("Raising matrix to power of non-integer number")
 		
-		if self.width != self.height: raise MatrixException()
+		if self.width != self.height:
+			raise MatrixException("Raising non-square matrix to power")
 		
 		if power == -1:
 			self = Matrix(self)
@@ -104,7 +109,7 @@ class Matrix:
 							m.rowAdd(i, j, 1)
 							break
 					else:
-						raise MatrixException()
+						raise MatrixException("Raising degenerate matrix to negative power")
 				
 				ratio = 1 / self[i, i] - 1
 				self.rowAdd(i, i, ratio)
